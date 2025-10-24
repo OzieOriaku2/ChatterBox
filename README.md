@@ -410,7 +410,6 @@ This project was created for educational purposes as part of a capstone project.
 - React and Express.js communities
 - Stack Overflow community
 - Youtube tutorials
-- Course materials provided by Great Learning
 
 ---
 
