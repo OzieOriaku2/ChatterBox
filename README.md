@@ -415,3 +415,17 @@ This project was created for educational purposes as part of a capstone project.
 ---
 
 **Built with ❤️ and lots of ☕**
+
+## 📸 Screenshots
+
+### Login Page
+
+![Login](screenshots/login.png)
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Chat Interface
+
+![Chat](screenshots/chat.png)
