@@ -137,7 +137,7 @@ This separation ensures:
 1. **Clone the repository**
 
 ```bash
-   git clone <repository-url>
+   git clone https://github.com/OzieOriaku2/ChatterBox
    cd chatterbox
 ```
 
@@ -417,6 +417,9 @@ This project was created for educational purposes as part of a capstone project.
 
 ## 📸 Screenshots
 
+### Desktop View
+
+<div align= "center">
 ### Login Page
 
 ![Login](screenshots/login.png)
@@ -425,6 +428,24 @@ This project was created for educational purposes as part of a capstone project.
 
 ![Dashboard](screenshots/dashboard.png)
 
-### Chat Interface
+#### Join Channel Modal
+
+![Join Channel](screenshots/join-channel-desktop.png)
+
+### Active Chat Interface
 
 ![Chat](screenshots/chat.png)
+
+</div>
+
+### Mobile View
+
+<div align="center">
+
+<img src="screenshots/channels-mobile.png" width="250" alt="Mobile Channels">
+<img src="screenshots/chat-mobile.png" width="250" alt="Mobile Chat">
+<img src="screenshots/join-modal-mobile.png" width="250" alt="Mobile Join Modal">
+
+_Left: Channel List | Center: Active Chat | Right: Join Modal_
+
+</div>

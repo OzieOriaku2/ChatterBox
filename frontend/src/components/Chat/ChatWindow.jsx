@@ -179,87 +179,115 @@ const handleLeaveChannel = async () => {
         </div>
       </div> */}
 
-      {/* Channel Header */}
-<div className="p-3 bg-white border-bottom shadow-sm">
-  <div className="d-flex justify-content-between align-items-center">
-    <div>
-      <h4 className="mb-1"># {channel.name}</h4>
-      {channel.description && (
-        <small className="text-muted">{channel.description}</small>
-      )}
-    </div>
-    <div className="d-flex align-items-center">
-      <Badge bg="secondary" className="me-3">
-        {channel.members?.length || 0} members
-      </Badge>
-      
-      {/* Show Join button if NOT a member */}
-      {!isMember && (
-        <Button 
-          variant="primary" 
-          size="sm" 
-          onClick={handleJoinChannel}
-          disabled={joining}
-        >
-          {joining ? 'Joining...' : 'Join Channel'}
-        </Button>
-      )}
-      
-      {/* Show Leave button if IS a member (and not creator) */}
-      {isMember && channel.createdBy?._id !== user?._id && (
-        <Button 
-          variant="outline-danger" 
-          size="sm" 
-          onClick={handleLeaveChannel}
-        >
-          Leave Channel
-        </Button>
-      )}
-      
-      {/* Show badge if user is creator */}
-      {isMember && channel.createdBy?._id === user?._id && (
-        <Badge bg="success">Creator</Badge>
-      )}
-    </div>
-  </div>
-</div>
-
-
-      {/* Messages Area */}
-      <div className="flex-grow-1 position-relative" style={{ minHeight: 0 }}>
-        {!isMember ? (
-          <div className="h-100 d-flex align-items-center justify-content-center">
-            <Card className="text-center p-4 shadow">
-              <Card.Body>
-                <h5>You're not a member of this channel</h5>
-                <p className="text-muted">Join to view and send messages</p>
-                <Button 
-                  variant="primary" 
-                  onClick={handleJoinChannel}
-                  disabled={joining}
-                >
-                  {joining ? 'Joining...' : 'Join Now'}
-                </Button>
-              </Card.Body>
-            </Card>
-          </div>
-        ) : loading ? (
-          <div className="h-100 d-flex align-items-center justify-content-center">
-            <Spinner animation="border" />
-          </div>
-        ) : error ? (
-          <Alert variant="danger" className="m-3">
-            {error}
-          </Alert>
-        ) : (
-          <MessageList messages={messages} currentUserId={user?._id} />
-        )}
+    {/* Channel Header - RESPONSIVE */}
+    <div className="p-2 p-md-3 bg-white border-bottom shadow-sm">
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
+        {/* Channel Info */}
+        <div className="flex-grow-1">
+          <h4 className="mb-1 fs-5 fs-md-4"># {channel.name}</h4>
+          {channel.description && (
+            <small className="text-muted d-none d-md-block">{channel.description}</small>
+          )}
+        </div>
+        
+        {/* Action Buttons - Responsive */}
+        <div className="d-flex align-items-center gap-2 flex-wrap">
+          <Badge bg="secondary" className="px-2 py-1">
+            {channel.members?.length || 0} {channel.members?.length === 1 ? 'member' : 'members'}
+          </Badge>
+          
+          {!isMember && (
+            <Button 
+              variant="primary" 
+              size="sm" 
+              onClick={handleJoinChannel}
+              disabled={joining}
+              className="text-nowrap"
+            >
+              {joining ? 'Joining...' : 'Join Channel'}
+            </Button>
+          )}
+          
+          {isMember && channel.createdBy?._id !== user?._id && (
+            <Button 
+              variant="outline-danger" 
+              size="sm" 
+              onClick={handleLeaveChannel}
+              className="text-nowrap"
+            >
+              Leave
+            </Button>
+          )}
+          
+          {isMember && channel.createdBy?._id === user?._id && (
+            <Badge bg="success" className="px-2 py-1">
+              Creator
+            </Badge>
+          )}
+        </div>
       </div>
-
-      {/* Message Input */}
-      <MessageInput onSendMessage={handleSendMessage} disabled={!isMember} />
     </div>
-  );
+
+    {/* Messages Area */}
+    <div className="flex-grow-1 position-relative" style={{ minHeight: 0 }}>
+      {!isMember ? (
+        // RESPONSIVE Modal for Non-Members
+        <div className="h-100 d-flex align-items-center justify-content-center p-3">
+          <Card className="text-center shadow w-100" style={{ maxWidth: '400px' }}>
+            <Card.Body className="p-3 p-md-4">
+              <div className="mb-3">
+                <div 
+                  className="mx-auto mb-3 d-flex align-items-center justify-content-center"
+                  style={{ 
+                    width: '60px', 
+                    height: '60px', 
+                    borderRadius: '50%', 
+                    backgroundColor: '#e9ecef' 
+                  }}
+                >
+                  <span style={{ fontSize: '30px' }}>🔒</span>
+                </div>
+                <h5 className="mb-2 fs-6 fs-md-5">You're not a member of this channel</h5>
+                <p className="text-muted mb-0 small">
+                  Join to view and send messages
+                </p>
+              </div>
+              <Button 
+                variant="primary" 
+                onClick={handleJoinChannel}
+                disabled={joining}
+                className="w-100"
+                size="lg"
+              >
+                {joining ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Joining...
+                  </>
+                ) : (
+                  '✓ Join Now'
+                )}
+              </Button>
+            </Card.Body>
+          </Card>
+        </div>
+      ) : loading ? (
+        <div className="h-100 d-flex align-items-center justify-content-center">
+          <Spinner animation="border" />
+        </div>
+      ) : error ? (
+        <Alert variant="danger" className="m-3">
+          {error}
+        </Alert>
+      ) : (
+        <MessageList messages={messages} currentUserId={user?._id} />
+      )}
+    </div>
+
+    {/* Message Input */}
+    <MessageInput onSendMessage={handleSendMessage} disabled={!isMember} />
+  </div>
+);
 };
 
 export default ChatWindow;
